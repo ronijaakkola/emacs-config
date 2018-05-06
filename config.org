@@ -1,0 +1,160 @@
+#+TITLE: Emacs configuration
+
+Roni Jaakkola's Emacs configuration. Inspiration for literate style configuration came from Alain M. Lafon and his talk: https://www.google.fi/search?q=play+eamcs+like+an+instrument&oq=play+eamcs+like+an+instrument&aqs=chrome..69i57j69i64.4750j0j7&sourceid=chrome&ie=UTF-8
+
+* Installation
+Installation description goes here..
+
+* Requirements
+** Add package repositories
+
+#+BEGIN_SRC emacs-lisp
+   (require 'package)
+
+   (setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
+                           ("marmalade" . "https://marmalade-repo.org/packages/")
+                           ("melpa" . "https://melpa.org/packages/")
+                           ("gelpa" . "http://gelpa.gdritter.com/")))
+#+END_SRC
+   
+** Third-party packages
+
+List of third-party packages to be installed. Many packages require some extra configuration, all of which is defined in their own section in this config.
+
+#+BEGIN_SRC emacs-lisp
+(defvar my-packages '(beacon
+                      auto-complete
+                      smex
+                      powerline))
+#+END_SRC
+
+** Install third-party packages
+
+#+BEGIN_SRC emacs-lisp
+  (dolist (p my-packages)
+    (unless (package-installed-p p)
+      (package-refresh-contents)
+      (package-install p))
+    (add-to-list 'package-selected-packages p))
+#+END_SRC
+
+* Default configuration
+  Default settings for basic Emacs features.
+
+** Always follow symlinks
+   When opening a file, always follow symlinks.
+
+#+BEGIN_SRC emacs-lisp
+  (setq vc-follow-symlinks t)
+#+END_SRC
+
+** Garbage collection
+   Increase allowed GC memory to 20MB. This way GC runs way less often.
+#+BEGIN_SRC emacs-lisp
+  (setq gc-cons-threshold 20000000)
+#+END_SRC
+
+** Prevent normal backup files
+#+BEGIN_SRC emacs-lisp
+(setq make-backup-files nil)
+#+END_SRC
+
+** Confirm before closing
+#+BEGIN_SRC emacs-lisp
+  (setq confirm-kill-emacs 'y-or-n-p)
+#+END_SRC
+** Bell
+#+BEGIN_SRC emacs-lisp
+(setq visible-bell t)
+#+END_SRC
+** Display the current time
+#+BEGIN_SRC emacs-lisp
+  (display-time-mode t)
+#+END_SRC
+** Do not display GUI toolbar
+#+BEGIN_SRC emacs-lisp
+  (tool-bar-mode 0)
+#+END_SRC
+
+** Do not show Emacs start message
+#+BEGIN_SRC emacs-lisp
+  (setq inhibit-splash-screen t)
+  (setq inhibit-startup-message t)
+#+END_SRC
+** Do not show scroll bars
+#+BEGIN_SRC emacs-lisp
+(scroll-bar-mode -1)
+#+END_SRC
+** Automatic line breaking
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'text-mode-hook 'auto-fill-mode)
+#+END_SRC
+** Save cursor position for files
+#+BEGIN_SRC emacs-lisp
+  (setq save-place-file "~/.emacs.d/saveplace")
+  (setq-default save-place t)
+  (require 'saveplace)
+#+END_SRC
+** =yes/no= shortcut
+#+BEGIN_SRC emacs-lisp
+  (fset 'yes-or-no-p 'y-or-n-p)
+#+END_SRC
+** =windmove=
+   Windmove allows you to move between buffers with Shift+arrow keys.
+
+#+BEGIN_SRC emacs-lisp
+(when (fboundp 'windmove-default-keybindings)
+  (windmove-default-keybindings))
+#+END_SRC
+* Third-party configuration
+Configuration of third-party packages. List of packages is defined in Requirements section.
+
+** =beacon-mode=
+https://github.com/Malabarba/beacon
+Show a visual indicator on the cursor whenever the window is scrolling
+#+BEGIN_SRC emacs-lisp
+(beacon-mode 1)
+#+END_SRC
+** Powerline
+#+BEGIN_SRC emacs-lisp
+(powerline-default-theme)
+#+END_SRC
+* Programming
+** General
+*** Auto completion
+https://github.com/auto-complete/auto-complete
+#+BEGIN_SRC emacs-lisp
+  (ac-config-default)
+#+END_SRC
+*** Tabs
+Set tab width to 2 for all buffers
+
+#+BEGIN_SRC emacs-lisp
+  (setq-default tab-width 2)
+#+END_SRC
+
+Use 2 spaces instead of a tab.
+
+#+BEGIN_SRC emacs-lisp
+  (setq-default tab-width 2 indent-tabs-mode nil)
+#+END_SRC
+
+Indentation cannot insert tabs.
+
+#+BEGIN_SRC emacs-lisp
+  (setq-default indent-tabs-mode nil)
+#+END_SRC
+*** Highlight matching parenthesis
+#+BEGIN_SRC emacs-lisp
+  (show-paren-mode t)
+#+END_SRC
+*** Delete trailing whitespace
+Delete trailing whitespace in all modes. Note that this is disabled
+in Markdown.
+
+#+BEGIN_SRC emacs-lisp
+    (add-hook 'before-save-hook '(lambda()
+                                  (when (not (or (derived-mode-p 'markdown-mode)
+                                                 (derived-mode-p 'org-mode))
+                                    (delete-trailing-whitespace)))))
+#+END_SRC
