@@ -5,7 +5,37 @@ Roni Jaakkola's Emacs configuration. Inspiration for literate style configuratio
 * Installation
 Installation description goes here..
 
-* Requirements ** Add package repositories #+BEGIN_SRC emacs-lisp (require 'package) (setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/") ("marmalade" . "https://marmalade-repo.org/packages/") ("melpa" . "https://melpa.org/packages/") ("gelpa" . "http://gelpa.gdritter.com/"))) #+END_SRC ** Third-party packages List of third-party packages to be installed. Many packages require some extra configuration, all of which is defined in their own section in this config. #+BEGIN_SRC emacs-lisp (defvar my-packages '(auto-complete beacon evil helm smex powerline)) #+END_SRC ** Install third-party packages #+BEGIN_SRC emacs-lisp (dolist (p my-packages) (unless (package-installed-p p) (package-refresh-contents) (package-install p)) (add-to-list 'package-selected-packages p)) #+END_SRC 
+* Requirements 
+** Add package repositories 
+#+BEGIN_SRC emacs-lisp 
+(require 'package) 
+(setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/") 
+                        ("marmalade" . "http://marmalade-repo.org/packages/")
+                        ("melpa" . "http://melpa.org/packages/")))
+#+END_SRC 
+
+#+RESULTS:
+
+** Third-party packages 
+   List of third-party packages to be installed. Many packages require
+   some extra configuration, all of which is defined in their own
+   section in this config. 
+#+BEGIN_SRC emacs-lisp 
+(defvar my-packages '(auto-complete 
+                      beacon 
+                      evil
+                      helm 
+                      smex 
+                      powerline)) 
+#+END_SRC 
+** Install third-party packages 
+#+BEGIN_SRC emacs-lisp 
+(dolist (p my-packages) 
+  (unless (package-installed-p p) 
+    (package-refresh-contents) 
+    (package-install p)) 
+  (add-to-list 'package-selected-packages p))
+#+END_SRC 
 * Default configuration
   Default settings for basic Emacs features.
 
