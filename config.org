@@ -28,6 +28,7 @@ Installation description goes here..
                       dashboard 
                       evil
                       helm
+                      magit
                       page-break-lines
                       powerline
                       projectile
