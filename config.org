@@ -23,12 +23,14 @@ Installation description goes here..
    some extra configuration, all of which is defined in their own
    section in this config. 
 #+BEGIN_SRC emacs-lisp 
-(defvar my-packages '(auto-complete 
+(defvar my-packages '(all-the-icons
+                      auto-complete
                       beacon
                       dashboard 
                       evil
                       helm
                       magit
+                      neotree
                       page-break-lines
                       powerline
                       projectile
@@ -149,13 +151,56 @@ Displayed widgets
 
 ** Evil
 Enable Evil mode
+
 #+BEGIN_SRC emacs-lisp
 (evil-mode t)
-(global-set-key (kbd "M-x") 'helm-M-x)
 #+END_SRC
+
+Disable Evil mode in certain modes by default
+
+#+BEGIN_SRC emacs-lisp
+(evil-set-initial-state 'dired-mode 'emacs)
+(evil-set-initial-state 'org-mode 'emacs)
+(evil-set-initial-state 'neotree-mode 'emacs)
+#+END_SRC
+
 ** Helm
+Enable helm keybind in Evil mode globally
+
 #+BEGIN_SRC emacs-lisp
 (global-set-key (kbd "M-x") 'helm-M-x)
+#+END_SRC
+
+** Neotree
+Neotree key binding
+
+#+BEGIN_SRC emacs-lisp
+(global-set-key [f8] 'neotree-toggle)
+#+END_SRC
+
+Default folder. This changes depending on the OS.
+TODO: Move platform specific stuff to its own chapter.
+
+#+BEGIN_SRC emacs-lisp
+(cond
+ ((string-equal system-type "windows-nt") ; Windows
+  (progn
+    (neotree-dir "C:/Users/roni/Documents/projektit")))
+ ((string-equal system-type "darwin") ; Mac
+  (progn
+    (message "Mac OS X")))
+ ((string-equal system-type "gnu/linux") ; Linux
+  (progn
+    (message "Linux"))))
+
+(neotree-toggle)
+#+END_SRC
+
+Set icon mode for Neotree if using GUI. Note, this requires
+all-the-icons and its fonts to be installed!
+
+#+BEGIN_SRC emacs-lisp
+(setq neo-theme (if (display-graphic-p) 'icons 'arrow))
 #+END_SRC
 
 ** Powerline
