@@ -1,4 +1,4 @@
-#+TITLE: Emacs configuration
+#a+TITLE: Emacs configuration
 
 Roni Jaakkola's Emacs configuration. Inspiration for literate style configuration came from Alain M. Lafon and his talk: https://www.google.fi/search?q=play+eamcs+like+an+instrument&oq=play+eamcs+like+an+instrument&aqs=chrome..69i57j69i64.4750j0j7&sourceid=chrome&ie=UTF-8
 
@@ -24,11 +24,14 @@ Installation description goes here..
    section in this config. 
 #+BEGIN_SRC emacs-lisp 
 (defvar my-packages '(auto-complete 
-                      beacon 
+                      beacon
+                      dashboard 
                       evil
-                      helm 
-                      smex 
-                      powerline)) 
+                      helm
+                      page-break-lines
+                      powerline
+                      projectile
+                      smex))
 #+END_SRC 
 ** Install third-party packages 
 #+BEGIN_SRC emacs-lisp 
@@ -121,6 +124,28 @@ Show a visual indicator on the cursor whenever the window is scrolling
 #+BEGIN_SRC emacs-lisp
 (beacon-mode 1)
 #+END_SRC
+** Dashboard
+Enable the dashboard
+
+#+BEGIN_SRC emacs-lisp
+(require 'dashboard)
+(dashboard-setup-startup-hook)
+#+END_SRC
+
+Set the title and logo
+
+#+BEGIN_SRC emacs-lisp
+(setq dashboard-banner-logo-title "Welcome to Emacs, Roni!")
+#+END_SRC
+
+Displayed widgets
+
+#+BEGIN_SRC emacs-lisp
+(setq dashboard-items '((recents  . 5)
+                        (projects . 5)
+                        (agenda . 5)))
+#+END_SRC
+
 ** Evil
 Enable Evil mode
 #+BEGIN_SRC emacs-lisp
