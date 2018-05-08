@@ -26,7 +26,8 @@ Installation description goes here..
 (defvar my-packages '(all-the-icons
                       auto-complete
                       beacon
-                      dashboard 
+                      dashboard
+                      doom-themes
                       evil
                       helm
                       magit
@@ -246,3 +247,43 @@ in Markdown.
                                                  (derived-mode-p 'org-mode))
                                     (delete-trailing-whitespace)))))
 #+END_SRC
+* Themes
+** Default theme
+Setting up the default theme doom-theme
+
+#+BEGIN_SRC emacs-lisp
+(load-theme 'doom-one t)
+#+END_SRC
+
+Enabling flashing mode-line on errors
+
+#+BEGIN_SRC emacs-lisp
+(doom-themes-visual-bell-config)
+#+END_SRC
+
+Enable custom neotree theme. Note, in order to this to work,
+all-the-icons and its fonts must be installed!
+
+#+BEGIN_SRC emacs-lisp
+(doom-themes-neotree-config)
+#+END_SRC
+
+Enable custom org-mode theme
+
+#+BEGIN_SRC emacs-lisp
+(doom-themes-org-config)
+#+END_SRC
+
+Brigter modeline and comments
+
+#+BEGIN_SRC emacs-lisp
+(setq doom-one-brighter-modeline t)
+#+END_SRC
+
+** Font
+   Setting the default font
+
+#+BEGIN_SRC emacs-lisp
+(set-face-attribute 'default nil :font "Source Code Pro" :height 110)
+#+END_SRC
+   
