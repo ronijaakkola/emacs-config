@@ -2,3 +2,6 @@
 elpa/
 config.el
 auto-save-list/
+*.dat
+*.eld
+recentf
