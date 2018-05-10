@@ -45,6 +45,36 @@ Installation description goes here..
     (package-install p)) 
   (add-to-list 'package-selected-packages p))
 #+END_SRC 
+* Platform specific configuration
+** Project folder
+Setting the default project folder. This folder open by default in neotree.
+#+BEGIN_SRC emacs-lisp
+(cond
+ ((string-equal system-type "windows-nt") ; Windows
+  (progn
+   (defvar project-folder "C:/Users/roni/Documents/projektit")))
+ ((string-equal system-type "darwin") ; Mac
+  (progn
+    (defvar project-folder "~/Documents/")))
+ ((string-equal system-type "gnu/linux") ; Linux
+  (progn
+    (defvar project-folder "~/"))))
+#+END_SRC 
+
+** Font
+Font height
+#+BEGIN_SRC emacs-lisp
+(cond
+ ((string-equal system-type "windows-nt") ; Windows
+  (progn
+   (defvar font-weight 110)))
+ ((string-equal system-type "darwin") ; Mac
+  (progn
+   (defvar font-weight 140)))
+ ((string-equal system-type "gnu/linux") ; Linux
+  (progn
+    (defvar font-weight 140))))
+#+END_SRC
 * Default configuration
   Default settings for basic Emacs features.
 
@@ -183,17 +213,7 @@ Default folder. This changes depending on the OS.
 TODO: Move platform specific stuff to its own chapter.
 
 #+BEGIN_SRC emacs-lisp
-(cond
- ((string-equal system-type "windows-nt") ; Windows
-  (progn
-    (neotree-dir "C:/Users/roni/Documents/projektit")))
- ((string-equal system-type "darwin") ; Mac
-  (progn
-    (neotree-dir "~/Documents/")))
- ((string-equal system-type "gnu/linux") ; Linux
-  (progn
-    (message "Linux"))))
-
+(neotree-dir project-folder)
 (neotree-toggle)
 #+END_SRC
 
@@ -284,6 +304,6 @@ Brigter modeline and comments
    Setting the default font
 
 #+BEGIN_SRC emacs-lisp
-(set-face-attribute 'default nil :font "Source Code Pro" :height 110)
+(set-face-attribute 'default nil :font "Source Code Pro" :height font-weight)
 #+END_SRC
    
