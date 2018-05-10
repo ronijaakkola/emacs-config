@@ -189,7 +189,7 @@ TODO: Move platform specific stuff to its own chapter.
     (neotree-dir "C:/Users/roni/Documents/projektit")))
  ((string-equal system-type "darwin") ; Mac
   (progn
-    (message "Mac OS X")))
+    (neotree-dir "~/Documents/")))
  ((string-equal system-type "gnu/linux") ; Linux
   (progn
     (message "Linux"))))
