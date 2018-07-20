@@ -70,7 +70,7 @@ Font height
    (defvar font-weight 110)))
  ((string-equal system-type "darwin") ; Mac
   (progn
-   (defvar font-weight 140)))
+   (defvar font-weight 160)))
  ((string-equal system-type "gnu/linux") ; Linux
   (progn
     (defvar font-weight 140))))
